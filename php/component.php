@@ -5,7 +5,11 @@ include '../App/lib/autoload.php';
 use Database;
 $Database = new App\Database;
 $Database = $Database->read($conn, 'categories');
+$category = new App\Models\Categories;
+$category = $category->all();
+$compenent = new App\Models\Components;
 
+var_dump($category);
 session_start();
 ?>
 <!DOCTYPE html>
@@ -115,18 +119,18 @@ session_start();
             </div>
         </section>
 
-        <?php foreach (read($conn, 'categories')as $key => $value) : ?>
-            <section class = "home-section" id="Kat<?= $value['id']; ?>">
+        <?php foreach ($category as $key => $value) : ?>
+            <section class = "home-section" id="Kat<?= $value->id; ?>">
                 <div class = "components">
                     <div class = "component-searcher">
                         <h1>Keresés szűkítése</h1>
                     </div>
                     <div class = "component-result">
-                        <?php foreach (readPart($conn, 'components', ['cat_id'], [$value['id']]) as $row) : ?>
+                        <?php foreach ($compenent->getItemBy('name',$value->id) as $row) : ?>
                             <div class = "component-result-border">
-                                <a href = "show.php?id=<?= $row['id']; ?>">
-                                    <img class="component-image" src='../component-image/<?= $row['image']; ?>'>
-                                    Név: <span class = "red"><?= $row['name']; ?></span></td>
+                                <a href = "show.php?id=<?= $row->id; ?>">
+                                    <img class="component-image" src='../component-image/<?= $row->image; ?>'>
+                                    Név: <span class = "red"><?= $row->name; ?></span></td>
                                 </a>    
                             </div>
                         <?php endforeach; ?>

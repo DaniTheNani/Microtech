@@ -21,6 +21,15 @@ class Model
         self::$DB = new Database;
     }
 
+     public function all(){
+        global $conn;
+        $modelArray = array();
+        $query = self::$DB->read($conn,$this->table);
+
+        $modelArray = $this->createCollection($query);
+
+        return $modelArray;
+     }
     public function createCollection(array $query): array
     {
         $modelArray = array();
