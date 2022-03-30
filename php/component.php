@@ -1,9 +1,10 @@
 <?php
 include "../common/adatkapcsolat.php";
+include '../App/lib/autoload.php';
 
 use Database;
-
-$dbnamespace = new Database();
+$Database = new App\Database;
+$Database = $Database->read($conn, 'categories');
 
 session_start();
 ?>
@@ -68,9 +69,9 @@ session_start();
                         <ul class="sub-menu">
                             <li><a class="link_name" href="#">Alkatrészek</a></li>
 
-                            <?php foreach (read($conn, 'categories')as $key) : ?>
-                                <li id="<?= $key['id'] ?>"><a href="#Kat<?= $key['id']; ?>">
-                                        <?= $key['name']; ?><br>
+                            <?php foreach ($Database as $key) : ?>
+                                <li id="<?= $key->id ?>"><a href="#Kat<?= $key->id  ?>">
+                                        <?= $key->name ?><br>
                                     </a></li>
                             <?php endforeach; ?>
                         </ul>
