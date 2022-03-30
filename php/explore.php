@@ -1,6 +1,5 @@
 <?php
 
-include "../common/adatkapcsolat.php";
 
 session_start();
 

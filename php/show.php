@@ -1,9 +1,9 @@
 <?php
-include "../common/adatkapcsolat.php";
-
+include '/App/lib/autoload.php';
+use App\Database;
 session_start();
-
-$adatok = readPart($conn, 'datas', ['id'], [$_GET['id']]);
+$componentName = new \App\Models\Components;
+$componentName = $componentName->getItemById($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -24,7 +24,7 @@ $adatok = readPart($conn, 'datas', ['id'], [$_GET['id']]);
         <div class="component-result-border">
             <table>
                 <tr>
-                    <?php foreach ($adatok as $key => $value) : ?>
+                    <?php foreach ($componentName as $key => $value) : ?>
                 <tr>
                     <td><?= $value['prop']; ?></td>
                     <td><?= $value['value']; ?></td>

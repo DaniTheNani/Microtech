@@ -2,9 +2,10 @@
 <link rel="stylesheet" href="/files/css/main.css?=<?= rand(1, 12000) ?>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/files/css/explore.css?=<?= rand(1, 12000) ?>">
-<script src="/files/js/explore.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="/css/show.css?=<?= rand(1, 12000) ?>">
-<link rel="stylesheet" href="../css/login.css?=<?= rand(1, 12000) ?>">
+<link rel="stylesheet" href="/files/css/show.css?=<?= rand(1, 12000) ?>">
+<link rel="stylesheet" href="/files/css/login.css?=<?= rand(1, 12000) ?>">
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="/files/css/index.css?=<?= rand(1, 12000) ?>">
 <script src="/files/js/login.js"></script>
+<script src="/files/js/explore.js"></script>

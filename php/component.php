@@ -1,8 +1,6 @@
 <?php
-include "../common/adatkapcsolat.php";
 include '../App/lib/autoload.php';
 
-use Database;
 $Database = new App\Database;
 $Database = $Database->read($conn, 'categories');
 $category = new App\Models\Categories;
@@ -80,7 +78,7 @@ session_start();
                 <li>
                     <section class="profile-details" id="">
                         <div class="profile-content">
-                            <img src="../images/user.jpg" alt="profileImg">
+                            <img src="/files/images/user.jpg" alt="profileImg">
                         </div>
                         <div class="name-job">
                             <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
@@ -106,7 +104,7 @@ session_start();
                 </div>
                 <div class="user-picture">
                     <figure>
-                        <img src="../images/user.jpg" alt="" class="user-profilepicture"><br>
+                        <img src="/files/images/user.jpg" alt="" class="user-profilepicture"><br>
                         <figcaption class="img-description">
                             Név: <?php echo $_SESSION['fullname']; ?>
                         </figcaption>
@@ -125,7 +123,7 @@ session_start();
                         <?php foreach ($compenent->getItemBy('name',$value->id) as $row) : ?>
                             <div class = "component-result-border">
                                 <a href = "show.php?id=<?= $row->id; ?>">
-                                    <img class="component-image" src='../component-image/<?= $row->image; ?>'>
+                                    <img class="component-image" src='/files/component-image/<?= $row->image; ?>'>
                                     Név: <span class = "red"><?= $row->name; ?></span></td>
                                 </a>    
                             </div>
