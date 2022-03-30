@@ -1,6 +1,7 @@
 <?php
-
 namespace App;
+
+include "App/Database.php";
 
 use App\Database;
 
@@ -85,6 +86,3 @@ class Model
         }
     }
 }
-    
-
-?>

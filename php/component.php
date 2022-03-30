@@ -1,5 +1,10 @@
 <?php
 include '../App/lib/autoload.php';
+include '../View/head.php';
+
+include '../App/Database.php';
+include '../App/Models/Categories.php';
+include '../App/Models/Components.php';
 
 $Database = new App\Database;
 $Database = $Database->read($conn, 'categories');

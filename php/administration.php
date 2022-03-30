@@ -2,8 +2,7 @@
 
 session_start();
 
-include "../common/adatkapcsolat.php";
-include "../View/head.php";
+include "/View/head.php";
 
 $sql = "SELECT * FROM categories";
 $result = $conn->query($sql);
@@ -168,7 +167,7 @@ if (isset($_POST['prop-submit-delete'])) {
             <li>
                 <section class="profile-details" id="">
                     <div class="profile-content">
-                        <img src="../images/user.jpg" alt="profileImg">
+                        <img src="/files/images/user.jpg" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
@@ -194,7 +193,7 @@ if (isset($_POST['prop-submit-delete'])) {
             </div>
             <div class="user-picture">
                 <figure>
-                    <img src="../images/user.jpg" alt="" class="user-profilepicture"><br>
+                    <img src="/files/images/user.jpg" alt="" class="user-profilepicture"><br>
                     <figcaption class="img-description">
                         Név: <?php echo $_SESSION['fullname']; ?>
                     </figcaption>
