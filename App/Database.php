@@ -2,41 +2,51 @@
 
 namespace App;
 
-use mysqli;
+use PDO;
 
+use PDOException;
 
+include(__DIR__ . "/../config.php");
 class Database
 {
 
-    private $servername = 'localhost';
-    private $username = "root";
-    private $password = "";
+    private $dbhost = 'localhost';
+    private $dbuser = "root";
+    private $dbpassword = "";
     private $dbname = "microtech";
+    private $dbc;
 
     function __construct()
     {
-        global $conn;
-        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $conn->set_charset("utf8");
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+        try {
+            $dsn = "mysql:host=" . $this->dbhost . ";port=3306" . ";dbname=" . $this->dbname;
+            $options = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+            $this->dbc = new PDO($dsn, $this->dbuser, $this->dbpassword, $options);
+        } catch (PDOException $exc) {
+            echo "Hiba: " . $exc->getMessage();
         }
     }
 
 
-    public function read($conn, $table)
+    public function read($table)
     {
         $sql = "SELECT * FROM " . $table;
-        return $result = $conn->query($sql);
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $data;
     }
 
-    public function readOne($conn, $table, $id)
+    public function readOne($table, $id)
     {
         $sql = "SELECT * FROM  . $table. WHERE id =.$id.";
-        return $result = $conn->query($sql);
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $data;
     }
 
-    public    function readFilter($conn, $table, $columns, $values)
+    public function readFilter($table, $columns, $values)
     {
         $sql = "SELECT * FROM " . $table . " WHERE ";
         for ($i = 0; $i < count($columns); $i++) {
@@ -44,18 +54,18 @@ class Database
         }
         $sql = substr($sql, 0, strlen($sql) - 5);
         $sql .= ";";
-        $result = $conn->query($sql);
-        return $result;
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $data;
     }
-    public function getItemByValue($conn,string $table, string $column, string $value)
+    public function getItemByValue(string $table, string $column, string $value)
     {
 
-            $sql = "SELECT * FROM " .  $table  . " WHERE " . $column . " =  '" . $value . "'";
-            return $result = $conn->query($sql);
-         
-            
-      
+        $sql = "SELECT * FROM " .  $table  . " WHERE " . $column . " =  '" . $value . "'";
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $data;
     }
- 
-    
 }

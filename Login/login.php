@@ -1,33 +1,33 @@
 <?php
-include '../common/adatkapcsolat.php';
+include '../App/Database.php';
 
-session_start();
+require_once __DIR__ . '/../lib/autoload.php';
 
 // if (isset($_POST['username']) && isset($_POST['password'])) {
- if (isset($_POST['submit-login'])) {
-     $username = $_POST['username'];
-     $password = $_POST['password'];
-     $md5 = md5($password);
+if (isset($_POST['submit-login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $md5 = md5($password);
 
-     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$md5'";
-     $result = mysqli_query($conn, $sql);
-     if ($result->num_rows > 0) {
-         $sql2 = "SELECT * FROM  users WHERE username = '$username'";
-         $result2 = mysqli_query($conn, $sql2);
-         while ($row = mysqli_fetch_array($result2)) {
-             $permission = $row["permission"];
-             $fullname = $row["fullname"];
-             $email = $row["email"];
-         }
-         $_SESSION['username'] = $username;
-         $_SESSION['permission'] = $permission;
-         $_SESSION['fullname'] = $fullname;
-         $_SESSION['email'] = $email;
-         header("Location: ../php/explore.php");
-     } else {
-         echo "<script>alert('Hibás felhasználónév vagy jelszó!');</script>";
-     }
- }
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$md5'";
+    $result = mysqli_query($conn, $sql);
+    if ($result->num_rows > 0) {
+        $sql2 = "SELECT * FROM  users WHERE username = '$username'";
+        $result2 = mysqli_query($conn, $sql2);
+        while ($row = mysqli_fetch_array($result2)) {
+            $permission = $row["permission"];
+            $fullname = $row["fullname"];
+            $email = $row["email"];
+        }
+        $_SESSION['username'] = $username;
+        $_SESSION['permission'] = $permission;
+        $_SESSION['fullname'] = $fullname;
+        $_SESSION['email'] = $email;
+        header("Location: ../php/explore.php");
+    } else {
+        echo "<script>alert('Hibás felhasználónév vagy jelszó!');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,12 +37,15 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../files/css/login.css?=<?= rand(1, 12000) ?>">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <script src="../files/js/login.js"></script>
     <title>MicroTech - login</title>
 </head>
 
 <body>
     <div class="background">
-        <video src="../images/Lake - 91562.mp4" muted loop autoplay></video>
+        <video src="../files/images/Lake - 91562.mp4" muted loop autoplay></video>
         <div class="header">
             <a href="../index.php"><button type="button" class="header-btn"><span></span>Vissza a főoldalra!</button></a>
         </div>
@@ -57,9 +60,9 @@ session_start();
                 <button type="button" onclick="register()" id="white" class="toggle-btn">Regisztráció</button>
             </div>
             <div class="social-icons">
-                <img src="../images/fb.png">
-                <img src="../images/tw.png">
-                <img src="../images/gp.png">
+                <img src="../Files/images/fb.png">
+                <img src="../Files/images/tw.png">
+                <img src="../Files/images/gp.png">
             </div>
             <form action="" method="post" id="login" class="input-group">
                 <input type="text" class="input-field" name="username" id="white" placeholder="Felhasználónév" required>

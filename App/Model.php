@@ -1,8 +1,6 @@
 <?php
 namespace App;
 
-include "App/Database.php";
-
 use App\Database;
 
 class Model
@@ -23,9 +21,8 @@ class Model
     }
 
      public function all(){
-        global $conn;
         $modelArray = array();
-        $query = self::$DB->read($conn,$this->table);
+        $query = self::$DB->read($this->table);
 
         $modelArray = $this->createCollection($query);
 
@@ -50,9 +47,7 @@ class Model
     }
     public function getItemById(int $id)
     {
-        global $conn;
-
-        $result = self::$DB->readOne($conn,$this->table, $id);
+        $result = self::$DB->readOne($this->table, $id);
 
         if (!isset($result["id"])) {
             $result = $result[0];
@@ -63,9 +58,8 @@ class Model
 
     public function getItemBy(string $column, string $value)
     {
-        global $conn;
 
-        $result = self::$DB->getItemByValue($conn,$this->table, $column, $value);
+        $result = self::$DB->getItemByValue($this->table, $column, $value);
         if ($result) {
             return $this->create($result[0]);
         } else {
@@ -75,8 +69,7 @@ class Model
 
     public function getItemsBy(string $column, string $value)
     {
-        global $conn;
-        $query = self::$DB->getItemByValue($conn,$this->table, $column, $value);
+        $query = self::$DB->getItemByValue($this->table, $column, $value);
         $collection = array();
         $collection = $this->createCollection($query);
         if ($collection) {

@@ -4,7 +4,7 @@ use App\Model;
 class Components extends Model{
 protected string $table = 'components';
 
-protected $attributes = [
+public array $attributes = [
     "ID" => 'int',
     "username" => 'string',
     "password" => 'string',

@@ -4,9 +4,8 @@ use App\Model;
 class Cat_prop extends Model{
 protected string $table = 'cat_prop';
 
-protected $attributes = [
+public array $attributes = [
     "prop_id" => 'int',
     "cat_id" => 'int'
 ];
 }
-?>
