@@ -1,16 +1,18 @@
 <?php
 
-require_once __DIR__ . '/../lib/autoload.php';
+include (__DIR__ . "../../Application/Controllers/LoginController.php");
+include (__DIR__ . "../../Application/Controllers/RegisterController.php");
+
 
 if (isset($_POST['submit-register'])) 
 {
-    $registernamespace = new \App\Controllers\RegisterController;
+    $registernamespace = new RegisterController();
     $registernamespace->InsertUser($_POST);
 }
 
 if(isset($_POST['submit-login']))
 {
-    $loginnamespace = new \App\Controllers\LoginController;
+    $loginnamespace = new LoginController();
     $loginnamespace->Get_user($_POST['username'], $_POST['password']);
 }
 ?>

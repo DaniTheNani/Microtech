@@ -1,10 +1,5 @@
 <?php
 
-namespace App;
-
-use PDO;
-
-use PDOException;
 
 include(__DIR__ . "/../config.php");
 class Database
@@ -66,6 +61,8 @@ class Database
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        var_dump($data);
+        var_dump($stmt);
         return $data;
     }
 

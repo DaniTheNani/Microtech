@@ -1,10 +1,5 @@
 <?php
-
-namespace App\Controllers;
-
 use App\Models\User;
-use App\Helper;
-
 class RegisterController
 {
     public function InsertUser($post)
@@ -21,7 +16,6 @@ class RegisterController
 
             if (empty($errors)) {
                 if ($post['passwd'] == $post['passwd2']) {
-                    $data['password'] = Helper::passwdcrypt($post['passwd']);
                 } else {
                     $wrongmatchpassword = "Nem egyeznek a jelszavai";
                     echo $wrongmatchpassword;
@@ -45,10 +39,7 @@ class RegisterController
                 }
 
                 $user = new User($data);
-                var_dump($user);
                 if ($user->insert()) {
-
-                   // header('Location: ../../Login/login.php');
                 }
             }
         }
