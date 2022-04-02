@@ -1,10 +1,12 @@
 <?php
+
 namespace App;
 
 use App\Database;
 
 class Model
 {
+
     protected string $table;
 
     protected $primaryKey = 'id';
@@ -20,14 +22,6 @@ class Model
         self::$DB = new Database;
     }
 
-     public function all(){
-        $modelArray = array();
-        $query = self::$DB->read($this->table);
-
-        $modelArray = $this->createCollection($query);
-
-        return $modelArray;
-     }
     public function createCollection(array $query): array
     {
         $modelArray = array();
@@ -41,10 +35,18 @@ class Model
         }
         return $modelArray;
     }
-    public function create($attributes){
-        $this->$attributes = $attributes;
-        return $this;
+
+    public function all(): array
+    {
+        $modelArray = array();
+
+        $query = self::$DB->read($this->table);
+
+        $modelArray = $this->createCollection($query);
+
+        return $modelArray;
     }
+
     public function getItemById(int $id)
     {
         $result = self::$DB->readOne($this->table, $id);
@@ -58,7 +60,6 @@ class Model
 
     public function getItemBy(string $column, string $value)
     {
-
         $result = self::$DB->getItemByValue($this->table, $column, $value);
         if ($result) {
             return $this->create($result[0]);
@@ -77,5 +78,51 @@ class Model
         } else {
             return false;
         }
+    }
+
+    public function create($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    public function insert()
+    {
+        try {
+            $data = $this->attributes;
+            self::$DB->insert($this->table, $data);
+        } catch (\Exception $ex) {
+            echo 'hiba a mentésnél: <br> ' . $ex->getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public function get($param = null)
+    {
+        if ($param) {
+            return $this->attributes[$param];
+        } else {
+            return $this->attributes;
+        }
+    }
+
+    public function set($attribute, $data)
+    {
+        if (!$this->attributes[$attribute]) {
+            array_push($this->attributes, $attribute);
+        }
+        $this->attributes[$attribute] = $data;
+        return true;
+    }
+    public function slug()
+    {
+        $slug = $this->attributes['name'];
+        return $slug;
+    }
+
+    public function __get($attribute)
+    {
+        return $this->attributes[$attribute];
     }
 }

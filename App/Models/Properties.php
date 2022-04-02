@@ -1,8 +1,8 @@
 <?php 
 namespace App\Models;
 use App\Model;
-class Components extends Model{
-protected string $table = 'components';
+class Properties extends Model{
+protected string $table = 'properties';
 
 public array $attributes = [
     "id" => 'int',

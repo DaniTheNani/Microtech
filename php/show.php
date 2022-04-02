@@ -4,7 +4,6 @@ include '/App/lib/autoload.php';
 
 use App\Database;
 
-session_start();
 $componentName = new \App\Models\Components;
 $componentName = $componentName->getItemById($_GET['id']);
 ?>

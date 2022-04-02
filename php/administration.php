@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 $sql = "SELECT * FROM categories";
 $result = $conn->query($sql);
@@ -110,7 +109,7 @@ if (isset($_POST['prop-submit-delete'])) {
                     <span class="link_name">Home</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#home">Home</a></li>
+                    <li><a class="link_name" href="#4home">Home</a></li>
                 </ul>
             </li>
             <li>

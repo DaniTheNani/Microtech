@@ -1,32 +1,17 @@
 <?php
-include '../App/Database.php';
 
 require_once __DIR__ . '/../lib/autoload.php';
 
-// if (isset($_POST['username']) && isset($_POST['password'])) {
-if (isset($_POST['submit-login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $md5 = md5($password);
+if (isset($_POST['submit-register'])) 
+{
+    $registernamespace = new \App\Controllers\RegisterController;
+    $registernamespace->InsertUser($_POST);
+}
 
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$md5'";
-    $result = mysqli_query($conn, $sql);
-    if ($result->num_rows > 0) {
-        $sql2 = "SELECT * FROM  users WHERE username = '$username'";
-        $result2 = mysqli_query($conn, $sql2);
-        while ($row = mysqli_fetch_array($result2)) {
-            $permission = $row["permission"];
-            $fullname = $row["fullname"];
-            $email = $row["email"];
-        }
-        $_SESSION['username'] = $username;
-        $_SESSION['permission'] = $permission;
-        $_SESSION['fullname'] = $fullname;
-        $_SESSION['email'] = $email;
-        header("Location: ../php/explore.php");
-    } else {
-        echo "<script>alert('Hibás felhasználónév vagy jelszó!');</script>";
-    }
+if(isset($_POST['submit-login']))
+{
+    $loginnamespace = new \App\Controllers\LoginController;
+    $loginnamespace->Get_user($_POST['username'], $_POST['password']);
 }
 ?>
 
@@ -70,14 +55,14 @@ if (isset($_POST['submit-login'])) {
                 <input type="checkbox" name="checkbox" class="check-box"><span>Maradjon bejelentkezve </span>
                 <input type="submit" name="submit-login" id="white" value="Bejelentkezés" class="submit-btn">
             </form>
-            <form action="Register/register.php" method="post" id="register" class="input-group">
+            <form action="" method="post" id="register" class="input-group">
                 <input type="text" class="input-field" name="username" id="white" placeholder="Felhasználónév" required>
                 <input type="text" class="input-field" name="fullname" id="white" placeholder="Teljes név" required>
                 <input type="email" class="input-field" name="email" id="white" placeholder="Email-cím" required>
-                <input type="password" class="input-field" name="password" id="white" placeholder="Jelszó" required>
-                <input type="password" class="input-field" name="cpassword" id="white" placeholder="Jelszó mégegyszer" required>
+                <input type="password" class="input-field" name="passwd" id="white" placeholder="Jelszó" required>
+                <input type="password" class="input-field" name="passwd2" id="white" placeholder="Jelszó mégegyszer" required>
                 <input type="checkbox" class="check-box" required><span>Elfogadom a felhasználási feltételeket</span>
-                <button type="submit" name="submit" id="white" class="submit-btn">Regisztrálás</button>
+                <button type="submit" name="submit-register" id="white" class="submit-btn">Regisztrálás</button>
             </form>
         </div>
     </div>
