@@ -61,8 +61,8 @@ if(isset($_POST['submit-login']))
                 <input type="text" class="input-field" name="username" id="white" placeholder="Felhasználónév" required>
                 <input type="text" class="input-field" name="fullname" id="white" placeholder="Teljes név" required>
                 <input type="email" class="input-field" name="email" id="white" placeholder="Email-cím" required>
-                <input type="password" class="input-field" name="passwd" id="white" placeholder="Jelszó" required>
-                <input type="password" class="input-field" name="passwd2" id="white" placeholder="Jelszó mégegyszer" required>
+                <input type="password" class="input-field" name="password" id="white" placeholder="Jelszó" required>
+                <input type="password" class="input-field" name="cpassword" id="white" placeholder="Jelszó mégegyszer" required>
                 <input type="checkbox" class="check-box" required><span>Elfogadom a felhasználási feltételeket</span>
                 <button type="submit" name="submit-register" id="white" class="submit-btn">Regisztrálás</button>
             </form>

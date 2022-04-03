@@ -1,7 +1,7 @@
 <?php
 
-
 include(__DIR__ . "/../config.php");
+
 class Database
 {
 
@@ -56,14 +56,15 @@ class Database
     }
     public function getItemByValue(string $table, string $column, string $value)
     {
-
-        $sql = "SELECT * FROM " .  $table  . " WHERE " . $column . " =  '" . $value . "'";
-        $stmt = $this->dbc->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        var_dump($data);
-        var_dump($stmt);
-        return $data;
+        try {
+            $sql = "SELECT * FROM " .  $table  . " WHERE " . $column . " =  '" . $value . "'";
+            $stmt = $this->dbc->prepare($sql);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (PDOException $exc) {
+            echo "Lekérdezési hiba: " . $exc->getTraceAsString();
+        }
     }
 
     public function getColumnName($table)

@@ -1,33 +1,30 @@
 <?php
 
-include (__DIR__ . "../../Database.php");
+include __DIR__ . "../../Database.php";
 
 class LoginController
 {
 
     public function Get_user($username, $password)
     {
-
         $givenUser = new Database();
 
-        $givenUser = $givenUser->getItemByValue('users', 'username', $username);
+        $UserData = $givenUser->getItemByValue('users', 'username', $username);
 
-        if ($givenUser) {
+        if ($UserData) {
 
-            foreach ($givenUser as $value) {
-                $passwordpass = $value['password'];
-                
+            foreach ($UserData  as $ertek) {
+                $passwordpass = $ertek['password'];
             }
-            var_dump($givenUser);
-
             if (password_verify($password, $passwordpass)) {
 
                 session_start();
-                foreach ($givenUser as $value) {
-                    $_SESSION['type'] = $value['type'];
-                    
+                $u = 0;
+                for ($u = 0; $u > $UserData; $u++) {
+                    $_SESSION['type'] = $givenUser['type'][$u];
+                    $_SESSION['user_id'] = $givenUser['id'][$u];
+                    header('Location: /');
                 }
-
             } else {
                 $wrongpassword = "Nem megfelelő jelszót adott meg!";
                 echo $wrongpassword;
