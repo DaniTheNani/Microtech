@@ -31,6 +31,9 @@ class Database
         $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
         return $data;
     }
+    public function getItemBy(){
+
+    }
 
     public function readOne($table, $id)
     {

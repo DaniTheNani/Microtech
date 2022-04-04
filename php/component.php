@@ -6,6 +6,7 @@ include realpath(__DIR__) . "Application/Database.php";
 $data = new Database();
 
 $category = $data->read('categories');
+$compenent = new Database;
 
 ?>
 <!DOCTYPE html>
@@ -69,9 +70,9 @@ $category = $data->read('categories');
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Alkatrészek</a></li>
 
-                        <?php foreach ($Database as $key) : ?>
-                            <li id="<?= $key->id ?>"><a href="#Kat<?= $key->id  ?>">
-                                    <?= $key->name ?><br>
+                        <?php foreach ($category as $key) : ?>
+                            <li id="<?= $key["id"] ?>"><a href="#Kat<?= $key["id"]  ?>">
+                                    <?= $key["name"] ?><br>
                                 </a></li>
                         <?php endforeach; ?>
                     </ul>
@@ -116,17 +117,17 @@ $category = $data->read('categories');
     </section>
 
     <?php foreach ($category as $key => $value) : ?>
-        <section class="home-section" id="Kat<?= $value->id; ?>">
+        <section class="home-section" id="Kat<?= $value["id"]; ?>">
             <div class="components">
                 <div class="component-searcher">
                     <h1>Keresés szűkítése</h1>
                 </div>
                 <div class="component-result">
-                    <?php foreach ($compenent->getItemBy('name', $value->id) as $row) : ?>
+                    <?php foreach ($compenent->getItemByValue('componens','name', $value["id"]) as $row) : ?>
                         <div class="component-result-border">
-                            <a href="show.php?id=<?= $row->id; ?>">
-                                <img class="component-image" src='/files/component-image/<?= $row->image; ?>'>
-                                Név: <span class="red"><?= $row->name; ?></span></td>
+                            <a href="show.php?id=<?= $row["id"]; ?>">
+                                <img class="component-image" src='/files/component-image/<?= $row["image"]; ?>'>
+                                Név: <span class="red"><?= $row["name"]; ?></span></td>
                             </a>
                         </div>
                     <?php endforeach; ?>
