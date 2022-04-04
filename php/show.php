@@ -1,11 +1,10 @@
 <?php
 
-include '/App/lib/autoload.php';
-
-use App\Database;
-
-$componentName = new \App\Models\Components;
-$componentName = $componentName->getItemById($_GET['id']);
+include __DIR__ . "../../Application/Database.php";
+$db = new Database();
+$componentName = $db->getItemByValue('components', 'id', $_GET['id']);
+$properties = new Database();
+$comp_prop = new Database();
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -26,13 +25,17 @@ $componentName = $componentName->getItemById($_GET['id']);
         <div class="component-result-border">
             <table>
                 <tr>
-                    <?php foreach ($adatok as $key => $value) : ?>
-                <tr>
-                    <td><?= $value['prop']; ?></td>
-                    <td><?= $value['value']; ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tr>
+                    <?php foreach ($componentName as $key => $value) : ?>
+                        <?= $value['name']; ?><br>
+                    </tr>
+                    <?php foreach ($comp_prop->getItemByValue('comp_prop', 'comp_id', $_GET['id']) as $row => $compValue) : ?>
+                        <tr>
+                            <?= $compValue['value'] ?><br>
+                            <?php foreach ($properties->read('properties') as $key => $propValue) : ?>
+                    </tr>
+        <?php endforeach;
+                        endforeach;
+                    endforeach; ?>
             </table>
         </div>
     </section>

@@ -28,11 +28,11 @@ class Database
         $sql = "SELECT * FROM " . $table;
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-    public function getItemBy(){
-
+    public function getItemBy()
+    {
     }
 
     public function readOne($table, $id)
@@ -40,7 +40,7 @@ class Database
         $sql = "SELECT * FROM  . $table. WHERE id =.$id.";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -54,7 +54,7 @@ class Database
         $sql .= ";";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
     public function getItemByValue(string $table, string $column, string $value)

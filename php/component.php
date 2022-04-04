@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-include realpath(__DIR__) . "Application/Database.php";
+include __DIR__. "../../Application/Database.php";
 
 $data = new Database();
 
 $category = $data->read('categories');
-$compenent = new Database;
+$compenent = new Database();
 
 ?>
 <!DOCTYPE html>
@@ -70,9 +70,9 @@ $compenent = new Database;
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Alkatrészek</a></li>
 
-                        <?php foreach ($category as $key) : ?>
-                            <li id="<?= $key["id"] ?>"><a href="#Kat<?= $key["id"]  ?>">
-                                    <?= $key["name"] ?><br>
+                        <?php foreach ($category as $key => $result): ?>
+                            <li id="<?= $result["id"]; ?>"><a href="#Kat<?= $result["id"];  ?>">
+                                    <?= $result["name"]; ?><br>
                                 </a></li>
                         <?php endforeach; ?>
                     </ul>
@@ -123,11 +123,11 @@ $compenent = new Database;
                     <h1>Keresés szűkítése</h1>
                 </div>
                 <div class="component-result">
-                    <?php foreach ($compenent->getItemByValue('componens','name', $value["id"]) as $row) : ?>
+                    <?php foreach ($compenent->getItemByValue('components','cat_id', $value["id"]) as $row => $query_result) : ?>
                         <div class="component-result-border">
-                            <a href="show.php?id=<?= $row["id"]; ?>">
-                                <img class="component-image" src='/files/component-image/<?= $row["image"]; ?>'>
-                                Név: <span class="red"><?= $row["name"]; ?></span></td>
+                            <a href="show.php?id=<?= $query_result["id"]; ?>">
+                                <img class="component-image" src='../files/component-image/<?= $query_result["image"]; ?>'>
+                                Név: <span class="red"><?= $query_result["name"]; ?></span></td>
                             </a>
                         </div>
                     <?php endforeach; ?>
