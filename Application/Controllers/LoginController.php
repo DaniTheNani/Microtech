@@ -10,21 +10,21 @@ class LoginController
         $givenUser = new Database();
 
         $UserData = $givenUser->getItemByValue('users', 'username', $username);
-
+        
         if ($UserData) {
 
             foreach ($UserData  as $ertek) {
                 $passwordpass = $ertek['password'];
             }
             if (password_verify($password, $passwordpass)) {
-
                 session_start();
-                $u = 0;
-                for ($u = 0; $u > $UserData; $u++) {
-                    $_SESSION['type'] = $givenUser['type'][$u];
-                    $_SESSION['user_id'] = $givenUser['id'][$u];
-                    header('Location: /');
+                foreach($UserData as $key){
+                    $_SESSION['usernameid'] = $key['username'];
+                    $_SESSION['fullname'] =  $key['fullname'];
+                    $_SESSION['permission'] = $key['permission'];
                 }
+
+                Header('Location: ../php/component.php');
             } else {
                 $wrongpassword = "Nem megfelelő jelszót adott meg!";
                 echo $wrongpassword;

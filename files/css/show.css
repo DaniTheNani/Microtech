@@ -42,7 +42,7 @@ body {
     position: absolute;
     width: 40%;
     height: 100%;
-    font-size: x-large;
+    font-size: larger;
     right: 0;
 }
 
@@ -51,6 +51,7 @@ body {
     height: 300px;
     left: 0;
     top: 0;
+    border: 2px solid cyan;
 }
 
 .img-description {
