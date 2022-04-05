@@ -81,7 +81,7 @@ $compenent = new Database();
             <li>
                 <section class="profile-details" id="">
                     <div class="profile-content">
-                        <img src="/files/images/user.jpg" alt="profileImg">
+                        <img src="..//files/images/user.jpg" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
@@ -124,12 +124,12 @@ $compenent = new Database();
                 </div>
                 <div class="component-result">
                     <?php foreach ($compenent->getItemByValue('components','cat_id', $value["id"]) as $row => $query_result) : ?>
+                        <a href="show.php?id=<?= $query_result["id"]; ?>">
                         <div class="component-result-border">
-                            <a href="show.php?id=<?= $query_result["id"]; ?>">
                                 <img class="component-image" src='../files/component-image/<?= $query_result["image"]; ?>'>
-                                Név: <span class="red"><?= $query_result["name"]; ?></span></td>
-                            </a>
-                        </div>
+                               <span style="font-size: x-large;"><?= $query_result["name"]; ?></span></td>
+                            </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </div>

@@ -57,6 +57,16 @@ class Database
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
+
+    public function innerSinner(string $id)
+    {
+        $sql = "SELECT * FROM properties INNER JOIN comp_prop ON properties.id = comp_prop.prop_id WHERE comp_prop.comp_id = " . $id ."; ";
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
     public function getItemByValue(string $table, string $column, string $value)
     {
         try {

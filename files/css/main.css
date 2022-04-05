@@ -621,7 +621,7 @@ body {
 
 .component-result-border {
     position: relative;
-    width: 50%;
+    width: 45%;
     height: 25%;
     left: 25%;
     top: 5%;
@@ -657,7 +657,11 @@ td {
     width: 250px;
     height: 140px;
     margin-left: 2%
+}
 
+.component-result a {
+    text-decoration: none;
+    color: white;
 }
 
 @media (max-width: 420px) {
