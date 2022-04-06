@@ -9,6 +9,15 @@ $categories = $db->read('categories');
 $components = $db->read('components');
 $properties = $db->read('properties');
 
+if (isset($_POST['cat-submit'])) {
+    $selectedcat = $_POST['comp_cat'];
+    foreach ($categories as $key) {
+        if ($selectedcat == $key['id']) {
+            header('Location: Categories/' . $key['name'] . '.php');
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -157,7 +166,7 @@ $properties = $db->read('properties');
         </div>
 
         <div class="card">
-            <a href="#new-comp-prop">
+            <a href="#new-comp_prop">
                 <div class="card-text">
                     <h5>Alkatrész tulajdonság</h5>
                     <p>Alkatrészekhez való tulajdonságok felvétele <br> (8 magos, 3200mhz, 700w, 8gb ... etc)</p>
@@ -251,39 +260,18 @@ $properties = $db->read('properties');
                 </ul>
             </div>
     </section>
-    <section class="home-section" id="new-comp-prop">
-        <div class="container">
-            <div class="category-box" style="width: 100%;">
-                <h1>Meglévő alkatrész tulajdonságának megadása</h1>
-                <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                <br>
-                    <div class="form">
-                        <input type="text" id="comp_prop" class="form_input" name="comp_prop" autocomplete="off" placeholder=" " require>
-                        <label for="comp_prop" class="form_label">Magok száma:</label>
-                    </div><br>
-                    <div class="form">
-                        <input type="text" id="comp_prop" class="form_input" name="comp_prop" autocomplete="off" placeholder=" " require>
-                        <label for="comp_prop" class="form_label">Tulajdonság</label>
-                    </div><br>
-                    <div class="form">
-                        <input type="text" id="propname" class="form_input" name="propname" autocomplete="off" placeholder=" " require>
-                        <label for="propname" class="form_label">Tulajdonság</label>
-                    </div><br>
-                    <div class="form">
-                        <input type="text" id="propname" class="form_input" name="propname" autocomplete="off" placeholder=" " require>
-                        <label for="propname" class="form_label">Tulajdonság</label>
-                    </div><br>
-                    <div class="form">
-                        <input type="text" id="propname" class="form_input" name="propname" autocomplete="off" placeholder=" " require>
-                        <label for="propname" class="form_label">Tulajdonság</label>
-                        <input type="submit" name="prop-submit" value="Rögzítés" class="submit-btn">
-                    </div>
-                </form>
-                <div class="result">
-                    <span class="success"><?php echo $newpropsuccess ?></span>
-                    <span class="notsuccess"><?php echo $newpropnotsuccess ?></span>
-                </div>
-            </div>
+    <section class="home-section" id="new-comp_prop">
+        <div class="comp_cat_container">
+            <form method="POST">
+                <label for="">Válasszon kategóriát: </label>
+                <select name="comp_cat" id="comp_cat">
+                    <?php foreach ($categories as $key) : ?>
+                        <option value="<?= $key['id']; ?>"><?= $key['name']; ?></option>
+                    <?php endforeach ?>
+                </select>
+                <button name="cat-submit" class="cat-submit">Választás</button>
+            </form>
+        </div>
     </section>
     <section class="home-section" id="delete-data">
         <div class="card">

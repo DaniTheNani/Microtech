@@ -664,6 +664,36 @@ td {
     color: white;
 }
 
+.comp_cat_container {
+    width: 30%;
+    height: 20%;
+    background-color: rgba(97, 96, 96, 0.274);
+    position: absolute;
+    left: 33%;
+    top: 40%;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.cat-submit {
+    width: 10rem;
+    height: 2.5rem;
+    position: absolute;
+    color: white;
+    background: none;
+    border: 2px solid darkgray;
+    border-radius: 0.5rem;
+    transition: 200ms ease;
+    cursor: pointer;
+    bottom: 15%;
+    right: 30%;
+}
+
+.cat-submit:hover {
+    border-color: #18ffff;
+    font-size: larger;
+}
+
 @media (max-width: 420px) {
     .sidebar.close .nav-links li .sub-menu {
         display: none;
