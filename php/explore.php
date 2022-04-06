@@ -1,6 +1,6 @@
 <?php
-
-
+include __DIR__ ."../../Application/Database.php";
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../files/css/explore.css?=<?= rand(1, 12000) ?>">
-    <script src="../files/js/explore.js"></script>
     <title>Micro Tech - Explore</title>
 </head>
 
@@ -32,6 +31,7 @@
         }
         ?>
     </div>
+    <script src="../files/js/explore.js"></script>
 </body>
 
 </html>

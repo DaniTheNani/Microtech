@@ -11,8 +11,8 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    scroll-behavior: smooth;
     overflow-y: hidden;
+    scroll-behavior: smooth;
 }
 
 .navbar {

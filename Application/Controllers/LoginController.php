@@ -24,7 +24,7 @@ class LoginController
                     $_SESSION['permission'] = $key['permission'];
                 }
 
-                Header('Location: ../php/component.php');
+                Header('Location: ../php/explore.php');
             } else {
                 $wrongpassword = "Nem megfelelő jelszót adott meg!";
                 echo $wrongpassword;

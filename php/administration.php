@@ -1,86 +1,13 @@
 <?php
+include __DIR__ . "../../Application/Database.php";
 
+session_start();
 
-$sql = "SELECT * FROM categories";
-$result = $conn->query($sql);
-$newcatsuccess = "";
-$newcatnotsuccess = "";
-$deletecatsuccess = "";
-$deletecatnotsuccess = "";
-if (isset($_POST['cat-submit'])) {
-    $catname = $_POST['catname'];
-    $sql2 = "SELECT * FROM categories WHERE name = '$catname'";
-    $result2 = $conn->query($sql2);
-    if ($result2->num_rows > 0) {
-        $newcatnotsuccess = "Már van egy ilyen kategória!";
-    } else {
-        $sql3 = $conn->prepare("INSERT INTO categories(name) VALUES('$catname')");
-        $sql3->execute();
-        $newcatsuccess = "Sikeresen rögzítettük!";
-    }
-}
+$db = new database();
 
-$sql4 = "SELECT * FROM components";
-$result4 = $conn->query($sql4);
-$newcompsuccess = "";
-$newcompnotsuccess = "";
-$deletecompsuccess = "";
-$deletecompnotsuccess = "";
-
-if (isset($_POST['comp-submit'])) {
-    $compname = $_POST['compname'];
-    $sql5 = "SELECT * FROM components WHERE name = '$compname'";
-    $result5 = $conn->query($sql5);
-    if ($result5->num_rows > 0) {
-        $newcompnotsuccess = "Már van egy ilyen alkatrész!";
-    } else {
-        $sql6 = $conn->prepare("INSERT INTO components(name) VALUES('$compname')");
-        $sql6->execute();
-        $newcompsuccess = "Sikeresen rögzítettük!";
-    }
-}
-
-$sql7 = "SELECT * FROM properties";
-$result7 = $conn->query($sql7);
-$newpropsuccess = "";
-$newpropnotsuccess = "";
-$deletepropsuccess = "";
-$deletepropnotsuccess = "";
-
-if (isset($_POST['prop-submit'])) {
-    $propname = $_POST['propname'];
-    $sql8 = "SELECT * FROM properties WHERE name = '$propname'";
-    $result8 = $conn->query($sql8);
-    if ($result8->num_rows > 0) {
-        $newpropnotsuccess = "Már van egy ilyen tulajdonság!";
-    } else {
-        $sql9 = $conn->prepare("INSERT INTO properties(name) VALUES('$propname')");
-        $sql9->execute();
-        $newpropsuccess = "Sikeresen rögzítettük!";
-    }
-}
-
-if (isset($_POST['cat-submit-delete'])) {
-    $id = $_POST['catid'];
-    $sql10 = "DELETE FROM categories WHERE id = '$id'";
-    $result10 = $conn->prepare($sql10);
-    $result10->execute();
-    $deletecatsuccess = "Sikeresen töröltük az adatbázisból!";
-}
-if (isset($_POST['comp-submit-delete'])) {
-    $id = $_POST['compid'];
-    $sql11 = "DELETE FROM components WHERE id = '$id'";
-    $result11 = $conn->prepare($sql11);
-    $result11->execute();
-    $deletecompsuccess = "Sikeresen töröltük az adatbázisból!";
-}
-if (isset($_POST['prop-submit-delete'])) {
-    $id = $_POST['propid'];
-    $sql12 = "DELETE FROM properties WHERE id = '$id'";
-    $result12 = $conn->prepare($sql12);
-    $result12->execute();
-    $deletepropsuccess = "Sikeresen töröltük az adatbázisból!";
-}
+$categories = $db->read('categories');
+$components = $db->read('components');
+$properties = $db->read('properties');
 
 ?>
 <!DOCTYPE html>
@@ -146,6 +73,7 @@ if (isset($_POST['prop-submit-delete'])) {
                         <li><a href="#new-category">Kategória</a></li>
                         <li><a href="#new-components">Alkatrész</a></li>
                         <li><a href="#new-properties">Tulajdonságok</a></li>
+                        <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
                     </ul>
                 </li>
                 <li>
@@ -167,7 +95,7 @@ if (isset($_POST['prop-submit-delete'])) {
             <li>
                 <section class="profile-details" id="">
                     <div class="profile-content">
-                        <img src="/files/images/user.jpg" alt="profileImg">
+                        <img src="../files/images/user.jpg" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
@@ -193,7 +121,7 @@ if (isset($_POST['prop-submit-delete'])) {
             </div>
             <div class="user-picture">
                 <figure>
-                    <img src="/files/images/user.jpg" alt="" class="user-profilepicture"><br>
+                    <img src="../files/images/user.jpg" alt="" class="user-profilepicture"><br>
                     <figcaption class="img-description">
                         Név: <?php echo $_SESSION['fullname']; ?>
                     </figcaption>
@@ -258,7 +186,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result as $key) :   ?>
+                        foreach ($categories as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>
@@ -287,7 +215,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result4 as $key) :   ?>
+                        foreach ($components as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>
@@ -316,7 +244,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result7 as $key) :   ?>
+                        foreach ($properties as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>
@@ -404,7 +332,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result as $key) :   ?>
+                        foreach ($categories as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>
@@ -433,7 +361,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result4 as $key) :   ?>
+                        foreach ($components as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>
@@ -462,7 +390,7 @@ if (isset($_POST['prop-submit-delete'])) {
                 <ul>
                     <li>
                         <?php
-                        foreach ($result7 as $key) :   ?>
+                        foreach ($properties as $key) :   ?>
                             <?= $key['id'] ?> . <?= $key['name'] ?><br>
                         <?php endforeach; ?>
                     </li>

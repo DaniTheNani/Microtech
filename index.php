@@ -1,6 +1,3 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -23,6 +20,7 @@
             <li><a href="Login/login.php">Bejelentkezés</a></li>
         </ul>
     </div>
+
     <div class="content">
         <h1>Micro Tech</h1>
         <p>Böngéssz több ezer számítógépes alkatrészek között vagy akár építsd fel a sajátodat!</p>
