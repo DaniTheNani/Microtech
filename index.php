@@ -29,7 +29,7 @@
         </div>
         <section id="more">
             <h1>Részlet cím</h1>
-            <p>Részletesebb információ..</p>
+            <p>Részletesebb információ...</p>
         </section>
     </div>
 </body>
