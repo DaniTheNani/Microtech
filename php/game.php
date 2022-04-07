@@ -1,5 +1,6 @@
 <?php
-
+include __DIR__ . "../../Application/Database.php";
+session_start();
 
 ?>
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/main.css?=<?= rand(1, 12000) ?>">
+    <link rel="stylesheet" href="../files/css/main.css?=<?= rand(1, 12000) ?>">
     <title>Micro Tech - Játékok</title>
 </head>
 
@@ -41,27 +42,6 @@
                 </ul>
             </li>
             <li>
-                <div class="iocn-link">
-                    <a href="#">
-                        <i class='bx bx-joystick'></i>
-                        <span class="link_name">Games</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Games</a></li>
-                    <li><a href="#">Sandbox</a></li>
-                    <li><a href="#">Real-time strategy</a></li>
-                    <li><a href="#">Shooters (FPS and TPS)</a></li>
-                    <li><a href="#">MOBA</a></li>
-                    <li><a href="#">Role-playing (RPG)</a></li>
-                    <li><a href="#">Simulation and sports</a></li>
-                    <li><a href="#">Action-adventure</a></li>
-                    <li><a href="#">Survival and horror</a></li>
-                    <li><a href="#">Platformer</a></li>
-                </ul>
-            </li>
-            <li>
                 <a href="explore.php">
                     <i class='bx bx-compass'></i>
                     <span class="link_name">Felfedezés</span>
@@ -70,10 +50,33 @@
                     <li><a class="link_name" href="explore.php">Felfedezés</a></li>
                 </ul>
             </li>
+            <div class="top-border">
+                <li>
+                    <div class="iocn-link">
+                        <a href="#">
+                            <i class='bx bx-joystick'></i>
+                            <span class="link_name">Games</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">Games</a></li>
+                        <li><a href="#">Sandbox</a></li>
+                        <li><a href="#">Real-time strategy</a></li>
+                        <li><a href="#">Shooters (FPS and TPS)</a></li>
+                        <li><a href="#">MOBA</a></li>
+                        <li><a href="#">Role-playing (RPG)</a></li>
+                        <li><a href="#">Simulation and sports</a></li>
+                        <li><a href="#">Action-adventure</a></li>
+                        <li><a href="#">Survival and horror</a></li>
+                        <li><a href="#">Platformer</a></li>
+                    </ul>
+                </li>
+            </div>
             <li>
                 <section class="profile-details" id="">
                     <div class="profile-content">
-                        <img src="/files/images/user.jpg" alt="profileImg">
+                        <img src="../files/images/user.jpg" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
@@ -98,7 +101,7 @@
             </div>
             <div class="user-picture">
                 <figure>
-                    <img src="/files/images/user.jpg" alt="" class="user-profilepicture"><br>
+                    <img src="../files/images/user.jpg" alt="" class="user-profilepicture"><br>
                     <figcaption class="img-description">
                         Név: <?php echo $_SESSION['fullname']; ?>
                     </figcaption>

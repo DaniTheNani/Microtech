@@ -6,11 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="files/css/index.css?=<?= rand(1, 12000) ?>">
-    <link rel="stylesheet" href="common/css/bootstrap.min.css">
-    <link rel="stylesheet" href="common/css/bootstrap-icons.css">
-    <script src="common/js/jquery-3.5.1.min.js"></script>
-    <script src="common/js/popper.min.js"></script>
-    <script src="common/js/bootstrap.min.js"></script>
     <title>Micro Tech - Főoldal</title>
 </head>
 

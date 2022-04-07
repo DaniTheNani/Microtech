@@ -4,20 +4,11 @@ include __DIR__ . "../../Application/Database.php";
 session_start();
 
 $db = new database();
-
+$comp_cat = new database();
 $categories = $db->read('categories');
 $components = $db->read('components');
 $properties = $db->read('properties');
-
-if (isset($_POST['cat-submit'])) {
-    $selectedcat = $_POST['comp_cat'];
-    foreach ($categories as $key) {
-        if ($selectedcat == $key['id']) {
-            header('Location: Categories/' . $key['name'] . '.php');
-        }
-    }
-}
-
+$cat_prop = new Database();
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -58,7 +49,7 @@ if (isset($_POST['cat-submit'])) {
                 </ul>
             </li>
             <li>
-                <a href="explore.php">
+                <a href="../php/explore.php">
                     <i class='bx bx-compass'></i>
                     <span class="link_name">Felfedezés</span>
                 </a>
@@ -110,7 +101,7 @@ if (isset($_POST['cat-submit'])) {
                         <div class="profile_name"><?php echo $_SESSION['fullname']; ?></div>
                         <div class="job"><?php echo $_SESSION['permission']; ?></div>
                     </div>
-                    <a href="logout.php"><i class='bx bx-log-out'></i></a>
+                    <a href="../php/logout.php"><i class='bx bx-log-out'></i></a>
                 </section>
             </li>
         </ul>
@@ -264,9 +255,9 @@ if (isset($_POST['cat-submit'])) {
         <div class="comp_cat_container">
             <form method="POST">
                 <label for="">Válasszon kategóriát: </label>
-                <select name="comp_cat" id="comp_cat">
+                <select name="comp_cat" id="comp_cat" onchange="location = this.value;">
                     <?php foreach ($categories as $key) : ?>
-                        <option value="<?= $key['id']; ?>"><?= $key['name']; ?></option>
+                        <option value="#<?= $key['name']; ?>"><?= $key['name']; ?></a></option>
                     <?php endforeach ?>
                 </select>
                 <button name="cat-submit" class="cat-submit">Választás</button>
@@ -386,6 +377,26 @@ if (isset($_POST['cat-submit'])) {
             </div>
         </div>
     </section>
+    <?php foreach ($categories as $key) : ?>
+        <section class="home-section" id="<?= $key['name'] ?>">
+            <div class="container">
+                <div class="category-box" style="width: 100%;">
+                    <h1><?= $key['name'] ?></h1>
+                    <select>
+                        <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result => $asd) : ?>
+                            <option value=""><?= $asd['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select><br>
+                    <?php foreach ($cat_prop->getItemByValue('cat_prop','cat_id', $key['id']) as $kurva) : ?>
+                        <?php foreach($properties as $anyad => $result){
+                            $kurva['prop_id'] == $result['id'];
+                        }?>
+                        
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    <?php endforeach; ?>
     <script>
         let arrow = document.querySelectorAll(".arrow");
         for (var i = 0; i < arrow.length; i++) {
