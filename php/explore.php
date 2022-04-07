@@ -26,7 +26,7 @@ session_start();
         <?php
         if ($_SESSION['permission'] == "Weblap Tervező") {
             echo ' <div class="nav-admin">
-            <a href="administration.php"><span>Belépés mint Adminisztrátor</span></a>
+            <a href="../Administration/administration.php"><span>Belépés mint Adminisztrátor</span></a>
             </div>';
         }
         ?>

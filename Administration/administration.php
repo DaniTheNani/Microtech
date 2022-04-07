@@ -45,7 +45,7 @@ if (isset($_POST['cat-submit'])) {
                     <span class="link_name">Home</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#4home">Home</a></li>
+                    <li><a class="link_name" href="#home">Home</a></li>
                 </ul>
             </li>
             <li>
@@ -63,7 +63,7 @@ if (isset($_POST['cat-submit'])) {
                     <span class="link_name">Felfedezés</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="explore.php">Felfedezés</a></li>
+                    <li><a class="link_name" href="../php/explore.php">Felfedezés</a></li>
                 </ul>
             </li>
             <div class="top-border">
