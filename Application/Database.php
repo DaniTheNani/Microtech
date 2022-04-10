@@ -55,6 +55,7 @@ class Database
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($stmt);
         return $data;
     }
 

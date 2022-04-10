@@ -35,8 +35,11 @@ if (isset($_POST['prop-submit'])) {
     $propnamespace->insert_prop($_POST);
 }
 
-if (isset($_POST['cat_prop-submit'])) {
+//inserting new component properties
 
+if (isset($_POST['cat_prop-submit'])) {
+    $comppropnamespace = new newcompprop();
+    $comppropnamespace->insert_comp_prop($_POST);
 }
 
 ?>
@@ -233,8 +236,8 @@ if (isset($_POST['cat_prop-submit'])) {
                         <label>Kategóriája:</label>
                         <select name="compcat" style="width: 90%" required>
                             <?php foreach ($categories as $key) : ?>
-                                <option value="<?= $key['id']?>"><?= $key['name']?></option>
-                                <?php endforeach; ?>
+                                <option value="<?= $key['id'] ?>"><?= $key['name'] ?></option>
+                            <?php endforeach; ?>
                         </select><br><br>
                         <input type="file" name="compimage" required><br><br>
                         <input type="submit" class="cat-submit" name="comp-submit" value="Rögzítés" style="position: absolute; left: 60%; top:100%;">
@@ -290,6 +293,7 @@ if (isset($_POST['cat_prop-submit'])) {
             <form method="POST">
                 <label for="">Válasszon kategóriát: </label>
                 <select name="comp_cat" id="comp_cat" onchange="location = this.value;">
+                    <option disabled selected>===Válasszon kategóriát===</option>
                     <?php foreach ($categories as $key) : ?>
                         <option value="#<?= $key['name']; ?>"><?= $key['name']; ?></a></option>
                     <?php endforeach ?>
@@ -416,17 +420,20 @@ if (isset($_POST['cat_prop-submit'])) {
             <div class="container">
                 <div class="category-box" style="width: 100%; text-align:center;">
                     <h1><?= $key['name'] ?></h1>
-                    <select>
-                        <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result) : ?>
-                            <option value=""><?= $result['name'] ?></option>
-                        <?php endforeach; ?>
-                    </select><br>
-                    <div class="form-input">
-                        <?php foreach ($cat_prop->cat_prop_inner($key['id']) as $result) : ?>
-                            <label><?= $result['name'] ?></label> <input type="text" name="<?= $result['name'] ?>"><br>
-                        <?php endforeach ?>
-                    </div>
-                    <button name="cat_prop-submit" class="cat-submit" style="bottom: 10%; right:40%;">Rögzítés</button>
+                    <form method="post">
+                        <select name="compprop">
+                            <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result) : ?>
+                                <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select><br>
+                        <div class="form-input">
+                            <?php foreach ($cat_prop->cat_prop_inner($key['id']) as $result) : ?>
+                                <label><?= $result['name'] ?></label>
+                                <input type="text" name="<?= $result['id'] ?>" required><br>
+                            <?php endforeach ?>
+                        </div>
+                        <button name="cat_prop-submit" class="cat-submit" style="bottom: 10%; right:40%;">Rögzítés</button>
+                    </form>
                 </div>
             </div>
         </section>
