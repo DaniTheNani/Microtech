@@ -15,8 +15,6 @@ class RegisterController
 
         $ExistUsername = $insertUser->getItemByValue('users', 'username', $data['username']);
 
-        var_dump($ExistUsername);
-
         if (empty($data['email']) || empty($data['username']) || empty($data['fullname'])) {
             return false;
         } else {

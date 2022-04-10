@@ -1,14 +1,44 @@
 <?php
 include __DIR__ . "../../Application/Database.php";
+include(__DIR__ . "../../Administration/newcat.php");
+include(__DIR__ . "../../Administration/newcomp.php");
+include(__DIR__ . "../../Administration/newprop.php");
+include(__DIR__ . "../../Administration/newcompprop.php");
 
 session_start();
 
-$db = new database();
-$comp_cat = new database();
+$db = new Database();
+$comp_cat = new Database();
 $categories = $db->read('categories');
 $components = $db->read('components');
 $properties = $db->read('properties');
 $cat_prop = new Database();
+
+//inserting new categories
+
+if (isset($_POST['cat-submit'])) {
+    $catnamespace = new newcat();
+    $catnamespace->insert_cat($_POST);
+}
+
+//inserting new components
+
+if (isset($_POST['comp-submit']) && isset($_FILES['compimage'])) {
+    $compnamespace = new newcomp();
+    $compnamespace->insert_comp($_POST, $_FILES);
+}
+
+//inserting new properties
+
+if (isset($_POST['prop-submit'])) {
+    $propnamespace = new newprop();
+    $propnamespace->insert_prop($_POST);
+}
+
+if (isset($_POST['cat_prop-submit'])) {
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -62,9 +92,7 @@ $cat_prop = new Database();
                     <div class="iocn-link">
                         <a href="#new-data">
                             <i class="bi bi-plus"></i>
-
                             <span class="link_name">Új adat rögzítése</span>
-
                         </a>
                         <i class='bx bxs-chevron-down arrow'></i>
                     </div>
@@ -198,16 +226,22 @@ $cat_prop = new Database();
         <div class="container">
             <div class="category-box">
                 <h1>Új Alkatrész felvétele</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="compname" class="form_input" name="compname" autocomplete="off" placeholder=" " require>
-                        <label for="compname" class="form_label">Alkatrész</label>
-                        <input type="submit" name="comp-submit" value="Rögzítés" class="submit-btn">
+                <div class="form-input" style="width: 20%; left:15%; top:30%;">
+                    <form method="post" enctype="multipart/form-data">
+                        <label>Alkatrész:</label>
+                        <input type="text" name="compname" required><br><br>
+                        <label>Kategóriája:</label>
+                        <select name="compcat" style="width: 90%" required>
+                            <?php foreach ($categories as $key) : ?>
+                                <option value="<?= $key['id']?>"><?= $key['name']?></option>
+                                <?php endforeach; ?>
+                        </select><br><br>
+                        <input type="file" name="compimage" required><br><br>
+                        <input type="submit" class="cat-submit" name="comp-submit" value="Rögzítés" style="position: absolute; left: 60%; top:100%;">
                     </form>
                 </div>
                 <div class="result">
-                    <span class="success"><?php echo $newcompsuccess ?></span>
-                    <span class="notsuccess"><?php echo $newcompnotsuccess ?></span>
+
                 </div>
             </div>
             <div class="list-box">
@@ -321,7 +355,7 @@ $cat_prop = new Database();
     </section>
     <section class="home-section" id="delete-components">
         <div class="container">
-            <div class="category-box">
+            <div class="category-box" style="width: 70%;">
                 <h1>Meglévő alkatrész törlése</h1>
                 <div class="form">
                     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
@@ -380,19 +414,19 @@ $cat_prop = new Database();
     <?php foreach ($categories as $key) : ?>
         <section class="home-section" id="<?= $key['name'] ?>">
             <div class="container">
-                <div class="category-box" style="width: 100%;">
+                <div class="category-box" style="width: 100%; text-align:center;">
                     <h1><?= $key['name'] ?></h1>
                     <select>
-                        <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result => $asd) : ?>
-                            <option value=""><?= $asd['name'] ?></option>
+                        <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result) : ?>
+                            <option value=""><?= $result['name'] ?></option>
                         <?php endforeach; ?>
                     </select><br>
-                    <?php foreach ($cat_prop->getItemByValue('cat_prop','cat_id', $key['id']) as $kurva) : ?>
-                        <?php foreach($properties as $anyad => $result){
-                            $kurva['prop_id'] == $result['id'];
-                        }?>
-                        
-                    <?php endforeach; ?>
+                    <div class="form-input">
+                        <?php foreach ($cat_prop->cat_prop_inner($key['id']) as $result) : ?>
+                            <label><?= $result['name'] ?></label> <input type="text" name="<?= $result['name'] ?>"><br>
+                        <?php endforeach ?>
+                    </div>
+                    <button name="cat_prop-submit" class="cat-submit" style="bottom: 10%; right:40%;">Rögzítés</button>
                 </div>
             </div>
         </section>
