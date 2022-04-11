@@ -423,7 +423,7 @@ if (isset($_POST['cat_prop-submit'])) {
                     <form method="post">
                         <select name="compprop">
                             <?php foreach ($comp_cat->getItemByValue('components', 'cat_id', $key['id']) as $result) : ?>
-                                <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                <option value="<?= $result['id'] ?>"><?= $result['name'] ?></option>
                             <?php endforeach; ?>
                         </select><br>
                         <div class="form-input">
