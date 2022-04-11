@@ -5,28 +5,24 @@ class newcompprop
 
     public function insert_comp_prop($post)
     {
-        $insertCompProp = new Database();
+        $data = array();
         $db = new Database();
-        $compprop = new Database();
-        $catprop = new Database();
-        $properties = $db->read('properties');
-        $components = $db->read('components');
-        $data['id'] = $post['compprop'];
-        var_dump($data);
+        var_dump($post);
+        die();
+        foreach ($post as $result) {
+            $properties = $db->getItemByValue('properties', 'id', $result['prop_id']);
+            $comp_id = $db->getItemByValue('components', 'id', $result['comp_id']);
+            $value = $result['value'];
+            $data = [
+                'prop_id' => $properties['id'],
+                'comp_id' => $comp_id['id'],
+                'value' => $value
+            ];
+            var_dump($data);
 
-        foreach($components as $key){
-            $key['id'] = $data;
+            die();
+            if ($db->insert('comp_prop', $data)) header('location:../');
+            unset($data);
         }
-        var_dump($key['cat_id']);
-        die();
-        foreach($catprop->cat_prop_inner($data['cat_id']) as $result){
-
-        }
-        die();
-        foreach($properties as $key){
-            $key['name'];
-            var_dump($key['id']);
-        }
-        die();
     }
 }
