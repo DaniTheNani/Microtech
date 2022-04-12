@@ -14,11 +14,20 @@ $components = $db->read('components');
 $properties = $db->read('properties');
 $cat_prop = new Database();
 
+$newcatsuccess = "";
+$newcatnotsuccess = "";
+$deletecatsuccess = "";
+$deletecatnotsuccess = "";
+
 //inserting new categories
 
 if (isset($_POST['cat-submit'])) {
     $catnamespace = new newcat();
-    $catnamespace->insert_cat($_POST);
+    if($catnamespace->insert_cat($_POST)){
+        $newcatsuccess = "Sikeresen rögzítettük";
+    }else{
+        $newcatnotsuccess = "Nem sikerült rögzítenünk";
+    }
 }
 
 //inserting new components
@@ -40,6 +49,22 @@ if (isset($_POST['prop-submit'])) {
 if (isset($_POST['cat_prop-submit'])) {
     $comppropnamespace = new newcompprop();
     $comppropnamespace->insert_comp_prop($_POST);
+}
+
+if (isset($_POST['cat-submit-delete'])) {
+    if ($deletecat = $db->delete('categories', $_POST['catid'])) {
+        header('Location: #delete-category');
+    }
+}
+if (isset($_POST['comp-submit-delete'])) {
+    if ($deletecomp = $db->delete('components', $_POST['compid'])) {
+        header('Location: #delete-components');
+    }
+}
+if (isset($_POST['prop-submit-delete'])) {
+    if ($deleteprop = $db->delete('properties', $_POST['propid'])) {
+        header('Location: #delete-properties');
+    }
 }
 
 ?>
@@ -428,7 +453,7 @@ if (isset($_POST['cat_prop-submit'])) {
                         </select><br>
                         <div class="form-input">
                             <?php foreach ($cat_prop->cat_prop_inner($key['id']) as $result) : ?>
-                                <input type="text" hidden  name="prop_id" value=<?=$result['id']?>>
+                                <input type="text" hidden name="prop_id" value=<?= $result['id'] ?>>
                                 <label><?= $result['name'] ?></label>
                                 <input type="text" name="value" required><br>
                             <?php endforeach ?>
