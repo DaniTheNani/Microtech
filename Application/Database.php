@@ -131,4 +131,32 @@ class Database
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
     }
+
+    public function update($table, $data, $id) {
+        $colName = $this->getNoKeyColumnName($table);
+        $sql = "UPDATE " . $table . " SET ";
+        foreach ($colName as $col) {
+
+            if ($col <> end($colName)) {
+                $sql .= $col . " = :" . $col . ", ";
+            } else {
+                $sql .= $col . " = :" . $col . " ";
+            }
+        }
+        $sql .= "WHERE id = :id ";
+        //echo $sql;
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        foreach ($colName as $col) {
+            $stmt->bindParam(":$col", $data["$col"]);
+        }
+        $stmt->execute();
+    }
+
+    public function delete($table, $id) {
+        $sql = "DELETE FROM " . $table . " WHERE id = " . $id;
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        var_dump($sql);
+    }
 }

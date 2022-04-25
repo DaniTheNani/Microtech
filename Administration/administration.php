@@ -4,6 +4,7 @@ include(__DIR__ . "../../Administration/newcat.php");
 include(__DIR__ . "../../Administration/newcomp.php");
 include(__DIR__ . "../../Administration/newprop.php");
 include(__DIR__ . "../../Administration/newcompprop.php");
+include(__DIR__ . "../../Administration/delete.php");
 
 session_start();
 
@@ -235,17 +236,19 @@ if (isset($_POST['cat_prop-submit'])) {
                 </div>
             </div>
             <div class="component-result">
-                <?php foreach ($categories as $key => $result) : ?>
-                    <div class="searcher-result">
-                        <?= $result['name']; ?>
-                        <button class="submit" id="delete">Törlés</button>
-                        <button class="submit" id="modify">Szerkesztés</button>
-                        <button class="submit" id="inspect">Megtekintés</button>
-                    </div>
-                <?php endforeach; ?>
+                <form action="" method="POST">
+                    <?php foreach ($categories as $key => $result) : ?>
+                        <div class="searcher-result">
+                            <?= $result['name']; ?>
+                            <a href="delete.php?id='<?= $result['id']; ?>'"><button class="submit" id="delete" name="delete">Törlés</button></a>
+                            <button class="submit" id="modify" name="modify">Szerkesztés</button>
+                            <button class="submit" id="inspect" name="inspect">Megtekintés</button>
+                        </div>
+                </form>
+            <?php endforeach; ?>
             </div>
             <div class="footer">
-            <span>Új kategória rögzítése</span>
+                <span>Új kategória rögzítése</span>
             </div>
         </div>
     </section>
