@@ -61,7 +61,7 @@ class Database
 
     public function innerSinner(string $id)
     {
-        $sql = "SELECT * FROM properties INNER JOIN comp_prop ON properties.id = comp_prop.prop_id WHERE comp_prop.comp_id = " . $id ."; ";
+        $sql = "SELECT * FROM properties INNER JOIN comp_prop ON properties.id = comp_prop.prop_id WHERE comp_prop.comp_id = " . $id . "; ";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,7 +69,7 @@ class Database
     }
     public function cat_prop_inner(string $id)
     {
-        $sql = "SELECT * FROM properties INNER JOIN cat_prop ON properties.id = cat_prop.prop_id WHERE cat_prop.cat_id = " . $id ."; ";
+        $sql = "SELECT * FROM properties INNER JOIN cat_prop ON properties.id = cat_prop.prop_id WHERE cat_prop.cat_id = " . $id . "; ";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
