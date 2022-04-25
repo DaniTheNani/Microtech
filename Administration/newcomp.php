@@ -37,8 +37,8 @@ class newcomp
             foreach ($ExistComp as $key) {
                 $key['name'] = $data['name'];
             }
-            $wrongcat = "Már van ilyen kategória";
-            echo $wrongcat;
+            $wrongcomp = "Már van ilyen Alkatrész";
+            echo $wrongcomp;
         } else {
             $insertComp->insert('components', $data);
             header('Location:#new-components');

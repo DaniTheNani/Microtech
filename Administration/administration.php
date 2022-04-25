@@ -14,6 +14,19 @@ $components = $db->read('components');
 $properties = $db->read('properties');
 $cat_prop = new Database();
 
+//messages default value
+
+$newcatsuccess = "";
+$newcatnotsuccess = "";
+$deletecatsuccess = "";
+$deletecatnotsuccess = "";
+$newpropsuccess = "";
+$newpropnotsuccess = "";
+$deletepropsuccess = "";
+$deletepropnotsuccess = "";
+$deletecompsuccess = "";
+$deletecompnotsuccess = "";
+
 //inserting new categories
 
 if (isset($_POST['cat-submit'])) {
@@ -91,6 +104,22 @@ if (isset($_POST['cat_prop-submit'])) {
                 </ul>
             </li>
             <div class="top-border">
+                <li>
+                    <div class="iocn-link">
+                        <a href="#new-data">
+                            <i class="bi bi-cloud"></i>
+                            <span class="link_name">Új adat rögzítése</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#new-data">Jelenlegi adatok az adatbázisban</a></li>
+                        <li><a href="#new-category">Kategória</a></li>
+                        <li><a href="#new-components">Alkatrész</a></li>
+                        <li><a href="#new-properties">Tulajdonságok</a></li>
+                        <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
+                    </ul>
+                </li>
                 <li>
                     <div class="iocn-link">
                         <a href="#new-data">
@@ -197,31 +226,26 @@ if (isset($_POST['cat_prop-submit'])) {
         </div>
     </section>
     <section class="home-section" id="new-category">
-        <div class="container">
-            <div class="category-box">
-                <h1>Új kategoria felvétele</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="catname" class="form_input" name="catname" autocomplete="off" placeholder=" " require>
-                        <label for="catname" class="form_label">Kategória</label>
-                        <input type="submit" name="cat-submit" value="Rögzítés" class="submit-btn">
-                    </form>
-                </div>
-                <div class="result">
-                    <span class="success"><?php echo $newcatsuccess ?></span>
-                    <span class="notsuccess"><?php echo $newcatnotsuccess ?></span>
+        <div class="components">
+            <div class="component-searcher">
+                <h1>Kategóriák</h1></i><br>
+                <div>
+                    <label for="">Név:</label>
+                    <input type="text">
                 </div>
             </div>
-            <div class="list-box">
-                <h5>Jelenlegi kategóriák az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($categories as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
+            <div class="component-result">
+                <?php foreach ($categories as $key => $result) : ?>
+                    <div class="searcher-result">
+                        <?= $result['name']; ?>
+                        <button class="submit" id="delete">Törlés</button>
+                        <button class="submit" id="modify">Szerkesztés</button>
+                        <button class="submit" id="inspect">Megtekintés</button>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="footer">
+            <span>Új kategória rögzítése</span>
             </div>
         </div>
     </section>
