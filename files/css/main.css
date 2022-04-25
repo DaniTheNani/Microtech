@@ -755,6 +755,7 @@ td {
 
 #modify:hover {
     color: #18ffff;
+    border-color: #18ffff;
 }
 
 #inspect:hover {
@@ -777,6 +778,33 @@ td {
 
 .footer span:hover {
     color: #18ffff;
+}
+
+.search-input {
+    background: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.search-field {
+    text-align: center;
+}
+
+.search-field .submit {
+    width: 7rem;
+    height: 2rem;
+    color: white;
+    background: none;
+    border: 2px solid darkgray;
+    border-radius: 0.5rem;
+    transition: 200ms ease;
+    cursor: pointer;
+    font-size: small;
+    position: relative;
+}
+
+.search-field .submit:hover {
+    border-color: #18ffff;
 }
 
 @media (max-width: 420px) {

@@ -157,6 +157,5 @@ class Database
         $sql = "DELETE FROM " . $table . " WHERE id = " . $id;
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
-        var_dump($sql);
     }
 }

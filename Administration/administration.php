@@ -1,10 +1,10 @@
 <?php
+
 include __DIR__ . "../../Application/Database.php";
 include(__DIR__ . "../../Administration/newcat.php");
 include(__DIR__ . "../../Administration/newcomp.php");
 include(__DIR__ . "../../Administration/newprop.php");
 include(__DIR__ . "../../Administration/newcompprop.php");
-include(__DIR__ . "../../Administration/delete.php");
 
 session_start();
 
@@ -115,7 +115,7 @@ if (isset($_POST['cat_prop-submit'])) {
                     </div>
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#new-data">Jelenlegi adatok az adatbázisban</a></li>
-                        <li><a href="#new-category">Kategória</a></li>
+                        <li><a href="#categories">Kategória</a></li>
                         <li><a href="#new-components">Alkatrész</a></li>
                         <li><a href="#new-properties">Tulajdonságok</a></li>
                         <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
@@ -131,7 +131,7 @@ if (isset($_POST['cat_prop-submit'])) {
                     </div>
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#new-data">Új adat rögzítése</a></li>
-                        <li><a href="#new-category">Kategória</a></li>
+                        <li><a href="#categories">Kategória</a></li>
                         <li><a href="#new-components">Alkatrész</a></li>
                         <li><a href="#new-properties">Tulajdonságok</a></li>
                         <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
@@ -192,7 +192,7 @@ if (isset($_POST['cat_prop-submit'])) {
     </section>
     <section class="home-section" id="new-data">
         <div class="card">
-            <a href="#new-category">
+            <a href="#categories">
                 <div class="card-text">
                     <h2>Kategória</h2>
                     <p>Újabb kategóra felvétele.<br> (cpu, gpu, ram, táp ... etc)</p>
@@ -226,22 +226,23 @@ if (isset($_POST['cat_prop-submit'])) {
             </a>
         </div>
     </section>
-    <section class="home-section" id="new-category">
+    <section class="home-section" id="categories">
         <div class="components">
             <div class="component-searcher">
                 <h1>Kategóriák</h1></i><br>
-                <div>
+                <div class="search-field">
                     <label for="">Név:</label>
-                    <input type="text">
+                    <input type="text" class="search-input">
+                    <input type="submit" value="Keresés" class="submit">
                 </div>
             </div>
             <div class="component-result">
                 <?php foreach ($categories as $key => $result) : ?>
                     <div class="searcher-result">
                         <?= $result['name']; ?>
-                        <a href="delete.php?id='<?= $result['id']; ?>'"><button class="submit" id="delete" name="delete">Törlés</button></a>
-                        <button class="submit" id="modify" name="modify">Szerkesztés</button>
-                        <button class="submit" id="inspect" name="inspect">Megtekintés</button>
+                        <a href="deletecat.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
+                        <button id="modify" name="modify">Szerkesztés</button>
+                        <button id="inspect" name="inspect">Megtekintés</button>
                     </div>
                 <?php endforeach; ?>
             </div>
