@@ -236,16 +236,14 @@ if (isset($_POST['cat_prop-submit'])) {
                 </div>
             </div>
             <div class="component-result">
-                <form action="" method="POST">
-                    <?php foreach ($categories as $key => $result) : ?>
-                        <div class="searcher-result">
-                            <?= $result['name']; ?>
-                            <a href="delete.php?id='<?= $result['id']; ?>'"><button class="submit" id="delete" name="delete">Törlés</button></a>
-                            <button class="submit" id="modify" name="modify">Szerkesztés</button>
-                            <button class="submit" id="inspect" name="inspect">Megtekintés</button>
-                        </div>
-                </form>
-            <?php endforeach; ?>
+                <?php foreach ($categories as $key => $result) : ?>
+                    <div class="searcher-result">
+                        <?= $result['name']; ?>
+                        <a href="delete.php?id='<?= $result['id']; ?>'"><button class="submit" id="delete" name="delete">Törlés</button></a>
+                        <button class="submit" id="modify" name="modify">Szerkesztés</button>
+                        <button class="submit" id="inspect" name="inspect">Megtekintés</button>
+                    </div>
+                <?php endforeach; ?>
             </div>
             <div class="footer">
                 <span>Új kategória rögzítése</span>
