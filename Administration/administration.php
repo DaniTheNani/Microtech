@@ -261,7 +261,7 @@ if (isset($_POST['prop-submit-delete'])) {
                     <div class="searcher-result">
                         <?= $result['name']; ?>
                         <a href="deletecat.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
-                        <button id="modify" name="modify">Szerkesztés</button>
+                        <a href="modifycat.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
                         <button id="inspect" name="inspect">Megtekintés</button>
                     </div>
                 <?php endforeach; ?>

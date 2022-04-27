@@ -23,7 +23,7 @@ $inner = $db->innerSinner($_GET['id']);
 </head>
 
 <body>
-    <section class="home-section" id="show">
+    <section id="show">
         <div class="component-result-border">
             <div class="component-result-image">
                 <figure>
