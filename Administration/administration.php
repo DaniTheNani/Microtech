@@ -141,37 +141,6 @@ if (isset($_POST['prop-submit-delete'])) {
                         <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
                     </ul>
                 </li>
-                <li>
-                    <div class="iocn-link">
-                        <a href="#new-data">
-                            <i class="bi bi-plus"></i>
-                            <span class="link_name">Új adat rögzítése</span>
-                        </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link_name" href="#new-data">Új adat rögzítése</a></li>
-                        <li><a href="#categories">Kategória</a></li>
-                        <li><a href="#new-components">Alkatrész</a></li>
-                        <li><a href="#new-properties">Tulajdonságok</a></li>
-                        <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <div class="iocn-link">
-                        <a href="#delete-data">
-                            <i class="bi bi-dash"></i>
-                            <span class="link_name">Meglévő adatok törlése</span>
-                        </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link_name" href="#delete-data">Meglévő adatok törlése</a></li>
-                        <li><a href="#delete-category">Kategória</a></li>
-                        <li><a href="#delete-components">Alkatrész</a></li>
-                        <li><a href="#delete-properties">Tulajdonságok</a></li>
-                    </ul>
-                </li>
             </div>
             <li>
                 <section class="profile-details" id="">
@@ -262,7 +231,7 @@ if (isset($_POST['prop-submit-delete'])) {
                         <?= $result['name']; ?>
                         <a href="deletecat.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
                         <a href="modifycat.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
-                        <button id="inspect" name="inspect">Megtekintés</button>
+                        <a href="show.php?id='<?= $result['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -346,119 +315,6 @@ if (isset($_POST['prop-submit-delete'])) {
                 </select>
                 <button name="cat-submit" class="cat-submit">Választás</button>
             </form>
-        </div>
-    </section>
-    <section class="home-section" id="delete-data">
-        <div class="card">
-            <a href="#delete-category">
-                <div class="card-text">
-                    <h2>Kategória</h2>
-                    <p>Meglévő kategóra törlése.<br> (cpu, gpu, ram, táp ... etc)</p>
-                </div>
-            </a>
-        </div>
-        <div class="card2">
-            <a href="#delete-components">
-                <div class="card-text">
-                    <h2>Alkatrész</h2>
-                    <p>Meglévő alkatrész törlése. <br>(AMD Ryzen 7 5800X, MSI B450 Tomahawk Max II ... etc)</p>
-                </div>
-            </a>
-        </div>
-        <div class="card3">
-            <a href="#delete-properties">
-                <div class="card-text">
-                    <h2>Tulajdonságok</h2>
-                    <p>Meglévő tulajdonság törlése. <br>(Méret, típus, gyártó, magok száma, memóra méret ... etc)</p>
-                </div>
-            </a>
-        </div>
-    </section>
-    <section class="home-section" id="delete-category">
-        <div class="container">
-            <div class="category-box">
-                <h1>Meglévő kategoria törlése</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="catname" class="form_input" name="catid" autocomplete="off" placeholder=" " require>
-                        <label for="catid" class="form_label">Kategória-id</label>
-                        <input type="submit" name="cat-submit-delete" value="Törlés" class="submit-btn">
-                    </form>
-                </div>
-                <div class="result">
-                    <span class="success"><?php echo $deletecatsuccess ?></span>
-                    <span class="notsuccess"><?php echo $deletecatnotsuccess ?></span>
-                </div>
-            </div>
-            <div class="list-box">
-                <h5>Jelenlegi kategóriák az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($categories as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <section class="home-section" id="delete-components">
-        <div class="container">
-            <div class="category-box" style="width: 70%;">
-                <h1>Meglévő alkatrész törlése</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="compname" class="form_input" name="compid" autocomplete="off" placeholder=" " require>
-                        <label for="compid" class="form_label">Alkatrész-id</label>
-                        <input type="submit" name="comp-submit-delete" value="Törlés" class="submit-btn">
-                    </form>
-                </div>
-                <div class="result">
-                    <span class="success"><?php echo $deletecompsuccess ?></span>
-                    <span class="notsuccess"><?php echo $deletecompnotsuccess ?></span>
-                </div>
-            </div>
-            <div class="list-box">
-                <h5>Jelenlegi alkatrészek az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($components as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <section class="home-section" id="delete-properties">
-        <div class="container">
-            <div class="category-box">
-                <h1>Meglévő tulajdonság törlése</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="propname" class="form_input" name="propid" autocomplete="off" placeholder=" " require>
-                        <label for="propid" class="form_label">Tulajdonság-id</label>
-                        <input type="submit" name="prop-submit-delete" value="Törlés" class="submit-btn">
-                    </form>
-                </div>
-                <div class="result">
-                    <span class="success"><?php echo $deletepropsuccess ?></span>
-                    <span class="notsuccess"><?php echo $deletepropnotsuccess ?></span>
-                </div>
-            </div>
-            <div class="list-box">
-                <h5>Jelenlegi tulajdonságok az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($properties as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
-            </div>
         </div>
     </section>
     <?php foreach ($categories as $key) : ?>

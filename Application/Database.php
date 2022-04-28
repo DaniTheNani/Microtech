@@ -37,7 +37,7 @@ class Database
 
     public function readOne($table, $id)
     {
-        $sql = "SELECT * FROM  . $table. WHERE id =.$id.";
+        $sql = "SELECT * FROM " . $table . " WHERE id = " . $id . "";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -132,7 +132,8 @@ class Database
         $stmt->execute();
     }
 
-    public function update($table, $data, $id) {
+    public function update($table, $data, $id)
+    {
         $colName = $this->getNoKeyColumnName($table);
         $sql = "UPDATE " . $table . " SET ";
         foreach ($colName as $col) {
@@ -151,11 +152,23 @@ class Database
             $stmt->bindParam(":$col", $data["$col"]);
         }
         $stmt->execute();
+        var_dump($sql);
     }
 
-    public function delete($table, $id) {
+    public function delete($table, $id)
+    {
         $sql = "DELETE FROM " . $table . " WHERE id = " . $id;
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute();
+    }
+
+    public function singleupdate($table, $column, $value, $id)
+    {
+        $sql = "UPDATE " . $table . " SET " . $column . " = '" . $value . "' WHERE id = " . $id . "";
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($sql);
+        return $data;
     }
 }
