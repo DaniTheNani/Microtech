@@ -1,10 +1,8 @@
 <?php
 
+$con = new PDO("mysql:host=localhost;dbname=microtech", 'root', '');
+
 include __DIR__ . "../../Application/Database.php";
-include(__DIR__ . "../../Administration/newcat.php");
-include(__DIR__ . "../../Administration/newcomp.php");
-include(__DIR__ . "../../Administration/newprop.php");
-include(__DIR__ . "../../Administration/newcompprop.php");
 
 session_start();
 
@@ -15,44 +13,6 @@ $components = $db->read('components');
 $properties = $db->read('properties');
 $cat_prop = new Database();
 
-//messages default value
-
-$newcatsuccess = "";
-$newcatnotsuccess = "";
-$deletecatsuccess = "";
-$deletecatnotsuccess = "";
-$newpropsuccess = "";
-$newpropnotsuccess = "";
-$deletepropsuccess = "";
-$deletepropnotsuccess = "";
-$deletecompsuccess = "";
-$deletecompnotsuccess = "";
-
-//inserting new categories
-
-if (isset($_POST['cat-submit'])) {
-    $catnamespace = new newcat();
-    if($catnamespace->insert_cat($_POST)){
-        $newcatsuccess = "Sikeresen rögzítettük";
-    }else{
-        $newcatnotsuccess = "Nem sikerült rögzítenünk";
-    }
-}
-
-//inserting new components
-
-if (isset($_POST['comp-submit']) && isset($_FILES['compimage'])) {
-    $compnamespace = new newcomp();
-    $compnamespace->insert_comp($_POST, $_FILES);
-}
-
-//inserting new properties
-
-if (isset($_POST['prop-submit'])) {
-    $propnamespace = new newprop();
-    $propnamespace->insert_prop($_POST);
-}
-
 //inserting new component properties
 
 if (isset($_POST['cat_prop-submit'])) {
@@ -60,19 +20,25 @@ if (isset($_POST['cat_prop-submit'])) {
     $comppropnamespace->insert_comp_prop($_POST);
 }
 
-if (isset($_POST['cat-submit-delete'])) {
-    if ($deletecat = $db->delete('categories', $_POST['catid'])) {
-        header('Location: #delete-category');
-    }
-}
-if (isset($_POST['comp-submit-delete'])) {
-    if ($deletecomp = $db->delete('components', $_POST['compid'])) {
-        header('Location: #delete-components');
-    }
-}
-if (isset($_POST['prop-submit-delete'])) {
-    if ($deleteprop = $db->delete('properties', $_POST['propid'])) {
-        header('Location: #delete-properties');
+if (isset($_POST['submit-search'])) {
+    $search = $_POST['search'];
+    $search = $con->prepare("SELECT * FROM categories WHERE name = '$search'");
+
+    $search->setFetchMode(PDO::FETCH_OBJ);
+    $search->execute();
+
+    if ($row = $search->fetch()) {
+?>
+        <div class="searcher-result">
+            <?= $row->name ?>
+            <a href="tools/categories/deletecat.php?id='<?= $row['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
+            <a href="tools/categories/modifycat.php?id='<?= $row['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
+            <a href="tools/categories/show.php?id='<?= $row['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
+        </div>
+
+    <?php
+    } else {
+        echo '<script>alert("valami")</script>';
     }
 }
 
@@ -136,9 +102,9 @@ if (isset($_POST['prop-submit-delete'])) {
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#new-data">Jelenlegi adatok az adatbázisban</a></li>
                         <li><a href="#categories">Kategória</a></li>
-                        <li><a href="#new-components">Alkatrész</a></li>
-                        <li><a href="#new-properties">Tulajdonságok</a></li>
-                        <li><a href="#new-comp_prop">Alkatrész tulajdonságai</a></li>
+                        <li><a href="#components">Alkatrész</a></li>
+                        <li><a href="#properties">Tulajdonságok</a></li>
+                        <li><a href="#comp_prop">Alkatrész tulajdonságai</a></li>
                     </ul>
                 </li>
             </div>
@@ -189,7 +155,7 @@ if (isset($_POST['prop-submit-delete'])) {
             </a>
         </div>
         <div class="card2">
-            <a href="#new-components">
+            <a href="#components">
                 <div class="card-text">
                     <h2>Alkatrész</h2>
                     <p>Újabb alkatrész felvétele. <br>(AMD Ryzen 7 5800X, MSI B450 Tomahawk Max II ... etc)</p>
@@ -198,7 +164,7 @@ if (isset($_POST['prop-submit-delete'])) {
         </div>
 
         <div class="card3">
-            <a href="#new-properties">
+            <a href="#properties">
                 <div class="card-text">
                     <h2>Tulajdonságok</h2>
                     <p>Újabb tulajdonság felvétele. <br>(Méret, típus, gyártó, magok száma, memóra méret ... etc)</p>
@@ -207,7 +173,7 @@ if (isset($_POST['prop-submit-delete'])) {
         </div>
 
         <div class="card">
-            <a href="#new-comp_prop">
+            <a href="#comp_prop">
                 <div class="card-text">
                     <h5>Alkatrész tulajdonság</h5>
                     <p>Alkatrészekhez való tulajdonságok felvétele <br> (8 magos, 3200mhz, 700w, 8gb ... etc)</p>
@@ -219,91 +185,84 @@ if (isset($_POST['prop-submit-delete'])) {
         <div class="components">
             <div class="component-searcher">
                 <h1>Kategóriák</h1></i><br>
-                <div class="search-field">
-                    <label for="">Név:</label>
-                    <input type="text" class="search-input">
-                    <input type="submit" value="Keresés" class="submit">
-                </div>
+                <form action="" method="POST">
+                    <div class="search-field">
+                        <label for="">Név:</label>
+                        <input type="text" class="search-input" name="search">
+                        <input type="submit" value="Keresés" class="submit" name="submit-search">
+                    </div>
+                </form>
             </div>
             <div class="component-result">
                 <?php foreach ($categories as $key => $result) : ?>
                     <div class="searcher-result">
                         <?= $result['name']; ?>
-                        <a href="deletecat.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
-                        <a href="modifycat.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
-                        <a href="show.php?id='<?= $result['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
+                        <a href="tools/categories/delete.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
+                        <a href="tools/categories/modify.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
+                        <a href="tools/categories/show.php?id='<?= $result['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
                     </div>
                 <?php endforeach; ?>
             </div>
             <div class="footer">
-                <span>Új kategória rögzítése</span>
+                <a href="tools/categories/new.php"><span>Új kategória rögzítése</span></a>
             </div>
         </div>
     </section>
-    <section class="home-section" id="new-components">
-        <div class="container">
-            <div class="category-box">
-                <h1>Új Alkatrész felvétele</h1>
-                <div class="form-input" style="width: 20%; left:15%; top:30%;">
-                    <form method="post" enctype="multipart/form-data">
-                        <label>Alkatrész:</label>
-                        <input type="text" name="compname" required><br><br>
-                        <label>Kategóriája:</label>
-                        <select name="compcat" style="width: 90%" required>
-                            <?php foreach ($categories as $key) : ?>
-                                <option value="<?= $key['id'] ?>"><?= $key['name'] ?></option>
-                            <?php endforeach; ?>
-                        </select><br><br>
-                        <input type="file" name="compimage" required><br><br>
-                        <input type="submit" class="cat-submit" name="comp-submit" value="Rögzítés" style="position: absolute; left: 60%; top:100%;">
-                    </form>
-                </div>
-                <div class="result">
-
-                </div>
+    <section class="home-section" id="components">
+    <div class="components">
+            <div class="component-searcher">
+                <h1>Alkatrészek</h1></i><br>
+                <form action="" method="POST">
+                    <div class="search-field">
+                        <label for="">Név:</label>
+                        <input type="text" class="search-input" name="search">
+                        <input type="submit" value="Keresés" class="submit" name="submit-search"><br>
+                    </div>
+                </form>
             </div>
-            <div class="list-box">
-                <h5>Jelenlegi alkatrészek az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($components as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
+            <div class="component-result">
+                <?php foreach ($components as $key => $result) : ?>
+                    <div class="searcher-result">
+                        <?= $result['name']; ?>
+                        <a href="tools/components/delete.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
+                        <a href="tools/components/modify.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
+                        <a href="tools/components/show.php?id='<?= $result['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="footer">
+                <a href="tools/components/new.php"><span>Új tulajdonság rögzítése</span></a>
             </div>
         </div>
     </section>
-    <section class="home-section" id="new-properties">
-        <div class="container">
-            <div class="category-box">
-                <h1>Új tulajdonság felvétele</h1>
-                <div class="form">
-                    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-                        <input type="text" id="propname" class="form_input" name="propname" autocomplete="off" placeholder=" " require>
-                        <label for="propname" class="form_label">Tulajdonság</label>
-                        <input type="submit" name="prop-submit" value="Rögzítés" class="submit-btn">
-                    </form>
-                </div>
-                <div class="result">
-                    <span class="success"><?php echo $newpropsuccess ?></span>
-                    <span class="notsuccess"><?php echo $newpropnotsuccess ?></span>
-                </div>
+    <section class="home-section" id="properties">
+    <div class="components">
+            <div class="component-searcher">
+                <h1>Tulajdonságok</h1></i><br>
+                <form action="" method="POST">
+                    <div class="search-field">
+                        <label for="">Név:</label>
+                        <input type="text" class="search-input" name="search">
+                        <input type="submit" value="Keresés" class="submit" name="submit-search"><br>
+                    </div>
+                </form>
             </div>
-            <div class="list-box">
-                <h5>Jelenlegi tulajdonságok az adatbázisban</h5>
-                <ul>
-                    <li>
-                        <?php
-                        foreach ($properties as $key) :   ?>
-                            <?= $key['id'] ?> . <?= $key['name'] ?><br>
-                        <?php endforeach; ?>
-                    </li>
-                </ul>
+            <div class="component-result">
+                <?php foreach ($properties as $key => $result) : ?>
+                    <div class="searcher-result">
+                        <?= $result['name']; ?>
+                        <a href="tools/properties/delete.php?id='<?= $result['id']; ?>'"><button id="delete" name="delete">Törlés</button></a>
+                        <a href="tools/properties/modify.php?id='<?= $result['id']; ?>'"><button id="modify" name="modify">Szerkesztés</button></a>
+                        <a href="tools/properties/show.php?id='<?= $result['id']; ?>'"><button id="inspect" name="inspect">Megtekintés</button></a>
+                    </div>
+                <?php endforeach; ?>
             </div>
+            <div class="footer">
+                <a href="tools/properties/new.php"><span>Új tulajdonság rögzítése</span></a>
+            </div>
+        </div>
     </section>
-    <section class="home-section" id="new-comp_prop">
+    <section class="home-section" id="comp_prop">
         <div class="comp_cat_container">
             <form method="POST">
                 <label for="">Válasszon kategóriát: </label>
@@ -330,7 +289,6 @@ if (isset($_POST['prop-submit-delete'])) {
                         </select><br>
                         <div class="form-input">
                             <?php foreach ($cat_prop->cat_prop_inner($key['id']) as $result) : ?>
-                                <input type="text" hidden name="prop_id" value=<?= $result['id'] ?>>
                                 <label><?= $result['name'] ?></label>
                                 <input type="text" name="value" required><br>
                             <?php endforeach ?>

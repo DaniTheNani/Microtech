@@ -76,6 +76,15 @@ class Database
         return $data;
     }
 
+    public function prop_cat_inner(string $id)
+    {
+        $sql = "SELECT * FROM categories INNER JOIN cat_prop ON categories.id = cat_prop.cat_id WHERE cat_prop.prop_id = " . $id . "; ";
+        $stmt = $this->dbc->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
     public function getItemByValue(string $table, string $column, string $value)
     {
         try {

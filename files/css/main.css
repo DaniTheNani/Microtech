@@ -700,17 +700,18 @@ td {
 }
 
 .form-input {
-    width: 30%;
-    height: 30%;
+    width: 50%;
+    height: 55%;
     position: absolute;
-    left: 25%;
     white-space: nowrap;
+    overflow-y: auto;
     margin-top: 3%;
+    left: 25%;
 }
 
 .form-input label {
     display: inline-block;
-    width: 100%;
+    width: 50%;
 }
 
 .searcher-result {
@@ -768,6 +769,11 @@ td {
     height: 5%;
     position: relative;
     text-transform: uppercase;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
 }
 
 .footer span {
