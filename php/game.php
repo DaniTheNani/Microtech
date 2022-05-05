@@ -2,6 +2,12 @@
 include __DIR__ . "../../Application/Database.php";
 session_start();
 
+$data = new Database();
+
+$category = $data->getItemByValue('categories', 'category', 'Játék');
+$compenent = new Database();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -61,15 +67,11 @@ session_start();
                     </div>
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Games</a></li>
-                        <li><a href="#">Sandbox</a></li>
-                        <li><a href="#">Real-time strategy</a></li>
-                        <li><a href="#">Shooters (FPS and TPS)</a></li>
-                        <li><a href="#">MOBA</a></li>
-                        <li><a href="#">Role-playing (RPG)</a></li>
-                        <li><a href="#">Simulation and sports</a></li>
-                        <li><a href="#">Action-adventure</a></li>
-                        <li><a href="#">Survival and horror</a></li>
-                        <li><a href="#">Platformer</a></li>
+                        <?php foreach ($category as $key => $result) : ?>
+                            <li id="<?= $result["id"]; ?>"><a href="#Kat<?= $result["id"];  ?>">
+                                    <?= $result["name"]; ?><br>
+                                </a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
             </div>

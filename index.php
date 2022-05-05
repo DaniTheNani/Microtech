@@ -23,7 +23,7 @@
             <a href="#more"><button type="button"><span></span>Részletek</button></a>
         </div>
         <section id="more">
-            <h1>Részlet cím</h1>
+            <h1>Bővebb információ</h1>
             <p>Részletesebb információ...</p>
         </section>
     </div>

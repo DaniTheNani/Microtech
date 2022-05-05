@@ -9,6 +9,7 @@ session_start();
 $db = new Database();
 $comp_cat = new Database();
 $categories = $db->read('categories');
+$specificCategory = $db->getItemByValue('categories', 'category', 'Alkatrész');
 $components = $db->read('components');
 $properties = $db->read('properties');
 $cat_prop = new Database();
@@ -268,7 +269,7 @@ if (isset($_POST['submit-search'])) {
                 <label for="">Válasszon kategóriát: </label>
                 <select name="comp_cat" id="comp_cat" onchange="location = this.value;">
                     <option disabled selected>===Válasszon kategóriát===</option>
-                    <?php foreach ($categories as $key) : ?>
+                    <?php foreach ($specificCategory as $key) : ?>
                         <option value="#<?= $key['name']; ?>"><?= $key['name']; ?></a></option>
                     <?php endforeach ?>
                 </select>
@@ -276,7 +277,7 @@ if (isset($_POST['submit-search'])) {
             </form>
         </div>
     </section>
-    <?php foreach ($categories as $key) : ?>
+    <?php foreach ($specificCategory as $key) : ?>
         <section class="home-section" id="<?= $key['name'] ?>">
             <div class="container">
                 <div class="category-box" style="width: 100%; text-align:center;">

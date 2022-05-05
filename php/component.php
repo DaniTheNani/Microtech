@@ -5,7 +5,7 @@ include __DIR__. "../../Application/Database.php";
 
 $data = new Database();
 
-$category = $data->read('categories');
+$category = $data->getItemByValue('categories', 'category', 'Alkatrész');
 $compenent = new Database();
 
 ?>

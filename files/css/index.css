@@ -20,9 +20,10 @@ body {
 }
 
 .navbar {
+    position: fixed;
     margin: 5% 5%;
     display: flex;
-    float: right;
+    right: 0;
 }
 
 .navbar ul li {

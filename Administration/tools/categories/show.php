@@ -27,6 +27,7 @@ $cat_prop = $db->cat_prop_inner($_GET['id']);
             <div class="component-result-image">
                 <?php foreach ($categories as $key => $value) : ?>
                     <span class="cat_name">Kategória neve: <?= $value['name']; ?></span>
+                    <span class="cat_type">(<?= $value['category'];?> kategóriába tartozik)</span>
                 <?php endforeach; ?>
             </div>
             <div class="component-result">

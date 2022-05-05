@@ -4,6 +4,8 @@ include __DIR__ . "../../../../Application/Database.php";
 if (isset($_POST['submit'])) {
     $data['name'] = $_POST['catname'];
 
+    $data['category'] = $_POST['selectedcat'];
+
     $insertCat = new Database();
 
     $ExistCat = $insertCat->getItemByValue('categories', 'name', $data['name']);
@@ -36,11 +38,15 @@ if (isset($_POST['submit'])) {
 
 <body>
     <section id="modify">
-        <div class="modify-border">
+        <div class="modify-border" style="height: 25%;">
             <h1>Kategória</h1>
             <form action="" method="post">
                 <label for="catname">Új kategória megadása:</label>
                 <input type="text" name="catname" placeholder="Új kategória"><br>
+                <select name="selectedcat" style="left:44%;">
+                    <option value="Alkatrész">Alkatrész</option>
+                    <option value="Játék">Játék</option>
+                </select><br>
                 <input type="submit" value="Rögzítés" class="submit" name="submit">
             </form>
         </div>

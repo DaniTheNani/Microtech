@@ -87,3 +87,11 @@ body {
     font-weight: bold;
     font-size: xx-large;
 }
+
+.cat_type {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    font-weight: bold;
+    font-size: x-large;
+}
